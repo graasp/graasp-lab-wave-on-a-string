@@ -1,11 +1,10 @@
-run-lint:
+build-prod:
   build: .
-  dockerfile: Dockerfile.run.lint
+  dockerfile: Dockerfile
+  encrypted_env_file: .env.prod.encrypted
 
-run-test:
-  build: .
-  dockerfile: Dockerfile.run.test
-  environment:
-    ENV: test
-    NODE_ENV: test
-  encrypted_env_file: .env.test.encrypted
+aws-prod:
+  image: codeship/aws-deployment
+  encrypted_env_file: .env.prod.encrypted
+  volumes:
+    - .:/deploy
